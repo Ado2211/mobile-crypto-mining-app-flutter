@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\drawable-v21_launch_background.xml.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\drawable-v21\\launch_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher2.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher2.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher2.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher2.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher2.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher3.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher3.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher3.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher3.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher3.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    }
+]
