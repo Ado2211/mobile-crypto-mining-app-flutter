@@ -1,4 +1,4 @@
-#Sat Jun 17 17:04:03 CEST 2023
+#Sat Jun 17 20:43:30 CEST 2023
 base.0=C\:\\Users\\Pc\\Desktop\\Development\\Projects\\MineLab\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

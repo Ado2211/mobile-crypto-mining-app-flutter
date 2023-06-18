@@ -12,6 +12,16 @@ class MyConverter {
     }
   }
 
+    static String removeTrailingZero(String value) {
+    try {
+      double number = double.parse(value);
+      String b = number.toStringAsFixed(8).replaceFirst(RegExp(r'\.?0*$'), '');
+      return b;
+    } catch (e) {
+      return value;
+    }
+  }
+
   static String twoDecimalPlaceFixedWithoutRounding(String value,{int precision=2}) {
     try {
       double number = double.parse(value);
