@@ -28,7 +28,6 @@ import 'package:mine_lab/views/screens/bottom_nav_screens/home/widget/home_statu
 import 'package:mine_lab/views/screens/bottom_nav_screens/home/widget/home_top_section.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -36,17 +35,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
-
     MyUtils.allScreenUtil();
     Get.put(ApiClient(sharedPreferences: Get.find()));
     Get.put(HomeRepo(apiClient: Get.find()));
     Get.put(UserProfileRepo(apiClient: Get.find()));
 
     final controller = Get.put(HomeController(homeRepo: Get.find()));
-    final userController = Get.put(UserProfileController(userProfileRepo: Get.find()));
+    final userController =
+        Get.put(UserProfileController(userProfileRepo: Get.find()));
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -54,6 +52,44 @@ class _HomeScreenState extends State<HomeScreen> {
       userController.loadProfileInfo();
       controller.minersList.clear();
     });
+  }
+
+  DefaultText newMethod2(HomeController controller, int index) {
+    var c = controller.transactionList[index].currency;
+    if (c == "USDT") {
+      return DefaultText(
+        text:
+            "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].postBalance.toString())} "
+            "${controller.transactionList[index].currency ?? ''}",
+        textColor: MyColor.colorBlack,
+      );
+    } else {
+      return DefaultText(
+        text:
+            "${controller.transactionList[index].postBalance.toString()} "
+            "${controller.transactionList[index].currency ?? ''}",
+        textColor: MyColor.colorBlack,
+      );
+    }
+  }
+
+  DefaultText newMethod(HomeController controller, int index) {
+    var c = controller.transactionList[index].currency;
+    if (c == "USDT") {
+      return DefaultText(
+          text: "${controller.transactionList[index].trxType} "
+              "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].amount.toString())} "
+              "${controller.transactionList[index].currency ?? ''}",
+          textColor: controller.changeStatusColor(
+              controller.transactionList[index].trxType.toString(), index));
+    } else {
+      return DefaultText(
+          text: "${controller.transactionList[index].trxType} "
+              "${(controller.transactionList[index].amount.toString())} "
+              "${controller.transactionList[index].currency ?? ''}",
+          textColor: controller.changeStatusColor(
+              controller.transactionList[index].trxType.toString(), index));
+    }
   }
 
   @override
@@ -66,191 +102,287 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    return  WillPopWidget(
+    return WillPopWidget(
       nextRoute: '',
       child: SafeArea(
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: MyColor.screenBgColor,
           body: GetBuilder<HomeController>(
-            builder: (controller) => controller.isLoading ? const CustomLoader(isFullScreen: true,) : SingleChildScrollView(
-              //padding: const EdgeInsets.only(bottom: Dimensions.space20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const HomeTopSection(),
-                  const SizedBox(height: Dimensions.space15),
-                  const HomeStatusCard(),
-                  const SizedBox(height: Dimensions.space15),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(vertical: Dimensions.space20, horizontal: Dimensions.space15),
-                    decoration: BoxDecoration(color: MyColor.colorWhite, borderRadius: BorderRadius.circular(Dimensions.defaultRadius)),
+            builder: (controller) => controller.isLoading
+                ? const CustomLoader(
+                    isFullScreen: true,
+                  )
+                : SingleChildScrollView(
+                    //padding: const EdgeInsets.only(bottom: Dimensions.space20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(MyStrings.referralLink, style: interSemiBoldDefault.copyWith(color: MyColor.colorBlack)),
-                        const SizedBox(height: Dimensions.space10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: Dimensions.space10, horizontal: Dimensions.space15),
-                                decoration: BoxDecoration(
-                                    color: MyColor.transparentColor,
-                                    borderRadius: BorderRadius.circular(Dimensions.defaultRadius),
-                                    border: Border.all(color: MyColor.primaryColor, width: 0.5)
-                                ),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Text(
-                                    controller.referralLink.toString(),
-                                    style: interRegularDefault.copyWith(color: MyColor.colorBlack),
-                                    maxLines: 1,
+                        const HomeTopSection(),
+                        const SizedBox(height: Dimensions.space15),
+                        const HomeStatusCard(),
+                        const SizedBox(height: Dimensions.space15),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: Dimensions.space20,
+                              horizontal: Dimensions.space15),
+                          decoration: BoxDecoration(
+                              color: MyColor.colorWhite,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.defaultRadius)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(MyStrings.referralLink,
+                                  style: interSemiBoldDefault.copyWith(
+                                      color: MyColor.colorBlack)),
+                              const SizedBox(height: Dimensions.space10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: Dimensions.space10,
+                                          horizontal: Dimensions.space15),
+                                      decoration: BoxDecoration(
+                                          color: MyColor.transparentColor,
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.defaultRadius),
+                                          border: Border.all(
+                                              color: MyColor.primaryColor,
+                                              width: 0.5)),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text(
+                                          controller.referralLink.toString(),
+                                          style: interRegularDefault.copyWith(
+                                              color: MyColor.colorBlack),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: Dimensions.space15),
-                            GestureDetector(
-                              onTap: (){
-                                Clipboard.setData(ClipboardData(text: controller.referralLink.toString()));
-                                CustomSnackBar.showCustomSnackBar(errorList: [], msg: [MyStrings.referralLinkCopied], isError: false);
-                              },
-                              child: const Icon(Icons.copy, color: MyColor.primaryColor, size: 20),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: Dimensions.space15),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal:Dimensions.space15 ,vertical: Dimensions.space15),
-                    decoration: const BoxDecoration(
-                      color: MyColor.colorWhite
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(MyStrings.latestTransaction, style: interRegularDefault.copyWith(fontWeight: FontWeight.w600)),
-                            InkWell(
-                              onTap: () => Get.toNamed(RouteHelper.transactionScreen),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                                child: Text(MyStrings.viewAll, style: interRegularSmall.copyWith(color: MyColor.primaryColor)),
-                              ),
-                            )
-                          ],
+                                  const SizedBox(width: Dimensions.space15),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Clipboard.setData(ClipboardData(
+                                          text: controller.referralLink
+                                              .toString()));
+                                      CustomSnackBar.showCustomSnackBar(
+                                          errorList: [],
+                                          msg: [MyStrings.referralLinkCopied],
+                                          isError: false);
+                                    },
+                                    child: const Icon(Icons.copy,
+                                        color: MyColor.primaryColor, size: 20),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: Dimensions.space10),
-                        controller.transactionList.isEmpty ? const Center(
-                          child: NoDataFound(),
-                        ) :
-                        ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          itemCount: controller.transactionList.length,
-                          separatorBuilder: (context, index) => const SizedBox(height: Dimensions.space10),
-                          itemBuilder: (context, index){
-                            return GestureDetector(
-                              onTap: (){
-                                controller.changeTrxIndex(index);
-                              },
-                              child: BottomSheetCard(
-                                bottomSpace: 0,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                        const SizedBox(height: Dimensions.space15),
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: Dimensions.space15,
+                                vertical: Dimensions.space15),
+                            decoration:
+                                const BoxDecoration(color: MyColor.colorWhite),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const SmallText(text: MyStrings.trxNo, textColor: MyColor.labelTextColor),
-                                            const SizedBox(height: Dimensions.space5),
-                                            DefaultText(text: controller.transactionList[index].trx ?? "", textColor: MyColor.colorBlack)
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            const SmallText(text: MyStrings.date, textColor: MyColor.labelTextColor),
-                                            const SizedBox(height: 8),
-                                            DefaultText(text: DateConverter.isoStringToLocalDateOnly(controller.transactionList[index].createdAt ?? ""), textColor: MyColor.colorBlack)
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const CustomDivider(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const SmallText(text: MyStrings.amount, textColor: MyColor.labelTextColor),
-                                            const SizedBox(height: Dimensions.space5),
-                                            DefaultText(
-                                                text: "${controller.transactionList[index].trxType} "
-                                                    "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].amount.toString())} "
-                                                    "${controller.transactionList[index].currency??''}",
-                                                textColor: controller.changeStatusColor(controller.transactionList[index].trxType.toString(),index)
-                                            )
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            const SmallText(text: MyStrings.postBalance, textColor: MyColor.labelTextColor),
-                                            const SizedBox(height: Dimensions.space5),
-                                            DefaultText(
-                                              text:"${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].postBalance.toString())} "
-                                                  "${controller.transactionList[index].currency??''}",
-                                              textColor: MyColor.colorBlack,
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                   ExpandedSection(
-                                     expand: index == controller.selectedTrxIndex,
-                                     child: Column(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       const CustomDivider(),
-                                       Column(
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                         children: [
-                                           const SmallText(text: MyStrings.details, textColor: MyColor.labelTextColor),
-                                           const SizedBox(height: Dimensions.space5),
-                                           DefaultText(
-                                             text: controller.transactionList[index].details ?? "",
-                                             textColor: MyColor.colorBlack,
-                                           )
-                                         ],
-                                       )
-                                     ],
-                                   ))
+                                    Text(MyStrings.latestTransaction,
+                                        style: interRegularDefault.copyWith(
+                                            fontWeight: FontWeight.w600)),
+                                    InkWell(
+                                      onTap: () => Get.toNamed(
+                                          RouteHelper.transactionScreen),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 8),
+                                        child: Text(MyStrings.viewAll,
+                                            style: interRegularSmall.copyWith(
+                                                color: MyColor.primaryColor)),
+                                      ),
+                                    )
                                   ],
                                 ),
-                              ),
-                            );
-                          },
-                        )
+                                const SizedBox(height: Dimensions.space10),
+                                controller.transactionList.isEmpty
+                                    ? const Center(
+                                        child: NoDataFound(),
+                                      )
+                                    : ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            controller.transactionList.length,
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(
+                                                height: Dimensions.space10),
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              controller.changeTrxIndex(index);
+                                            },
+                                            child: BottomSheetCard(
+                                              bottomSpace: 0,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const SmallText(
+                                                              text: MyStrings
+                                                                  .trxNo,
+                                                              textColor: MyColor
+                                                                  .labelTextColor),
+                                                          const SizedBox(
+                                                              height: Dimensions
+                                                                  .space5),
+                                                          DefaultText(
+                                                              text: controller
+                                                                      .transactionList[
+                                                                          index]
+                                                                      .trx ??
+                                                                  "",
+                                                              textColor: MyColor
+                                                                  .colorBlack)
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          const SmallText(
+                                                              text: MyStrings
+                                                                  .date,
+                                                              textColor: MyColor
+                                                                  .labelTextColor),
+                                                          const SizedBox(
+                                                              height: 8),
+                                                          DefaultText(
+                                                              text: DateConverter
+                                                                  .isoStringToLocalDateOnly(controller
+                                                                          .transactionList[
+                                                                              index]
+                                                                          .createdAt ??
+                                                                      ""),
+                                                              textColor: MyColor
+                                                                  .colorBlack)
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const CustomDivider(),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const SmallText(
+                                                              text: MyStrings
+                                                                  .amount,
+                                                              textColor: MyColor
+                                                                  .labelTextColor),
+                                                          const SizedBox(
+                                                              height: Dimensions
+                                                                  .space5),
+                                                          newMethod(
+                                                              controller, index)
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          const SmallText(
+                                                              text: MyStrings
+                                                                  .postBalance,
+                                                              textColor: MyColor
+                                                                  .labelTextColor),
+                                                          const SizedBox(
+                                                              height: Dimensions
+                                                                  .space5),
+                                                          newMethod2(
+                                                              controller, index)
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  ExpandedSection(
+                                                      expand: index ==
+                                                          controller
+                                                              .selectedTrxIndex,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const CustomDivider(),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const SmallText(
+                                                                  text: MyStrings
+                                                                      .details,
+                                                                  textColor: MyColor
+                                                                      .labelTextColor),
+                                                              const SizedBox(
+                                                                  height:
+                                                                      Dimensions
+                                                                          .space5),
+                                                              DefaultText(
+                                                                text: controller
+                                                                        .transactionList[
+                                                                            index]
+                                                                        .details ??
+                                                                    "",
+                                                                textColor: MyColor
+                                                                    .colorBlack,
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ))
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      )
+                              ],
+                            )),
                       ],
-                    )
+                    ),
                   ),
-                ],
-              ),
-            ),
           ),
           bottomNavigationBar: const CustomBottomNav(currentIndex: 0),
         ),
@@ -258,5 +390,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
+  
 }

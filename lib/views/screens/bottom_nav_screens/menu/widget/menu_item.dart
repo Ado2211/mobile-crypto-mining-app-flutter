@@ -28,10 +28,12 @@ class MenuItems extends StatelessWidget {
             Row(
               children: [
                 Container(
+                  
                   height: 35, width: 35,
                   alignment: Alignment.center,
-                  decoration: const BoxDecoration(color: MyColor.screenBgColor, shape: BoxShape.circle),
-                  child: Image.asset(imageSrc, color: MyColor.colorBlack, height: 17.5, width: 17.5),
+                  decoration: const BoxDecoration(color: MyColor.primaryColor, shape: BoxShape.circle),
+                  child: Image.asset(imageSrc, color: MyColor.colorBlack, height: 17.5, width: 17.5, ),
+                
                 ),
                 const SizedBox(width: Dimensions.space15),
                 Text(label, style: interRegularDefault.copyWith(color: MyColor.colorBlack))

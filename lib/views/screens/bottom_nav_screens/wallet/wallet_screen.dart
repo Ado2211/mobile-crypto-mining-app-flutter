@@ -20,7 +20,6 @@ import 'package:mine_lab/views/components/will_pop_widget.dart';
 import 'package:mine_lab/views/screens/bottom_nav_screens/wallet/widget/wallet_update_bottom_sheet.dart';
 
 class WalletScreen extends StatefulWidget {
-
   const WalletScreen({Key? key}) : super(key: key);
 
   @override
@@ -28,7 +27,6 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-
   @override
   void initState() {
     Get.put(ApiClient(sharedPreferences: Get.find()));
@@ -39,6 +37,24 @@ class _WalletScreenState extends State<WalletScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.loadWalletData();
     });
+  }
+
+    Text newMethod(WalletController controller, int index) {
+    var c = controller.walletList[index].miner?.coinCode;
+    if (c == "USDT") {
+      return Text(
+          "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.walletList[index].balance ?? "")} ${controller.walletList[index].miner?.coinCode ?? ""}",
+          style: interRegularDefault.copyWith(
+            fontWeight: FontWeight.w500,
+          ));
+         
+    } else {
+     return Text(
+         "${MyConverter.removeTrailingZero(controller.walletList[index].balance ?? "")} ${controller.walletList[index].miner?.coinCode ?? "".toString()}",
+          style: interRegularDefault.copyWith(
+            fontWeight: FontWeight.w500,
+          ));
+    }
   }
 
   @override
@@ -56,95 +72,127 @@ class _WalletScreenState extends State<WalletScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: MyColor.primaryColor,
-          title: Text(MyStrings.wallets, style: interRegularLarge.copyWith(color: MyColor.colorWhite)),
+          title: Text(MyStrings.wallets,
+              style: interRegularLarge.copyWith(color: MyColor.colorWhite)),
           automaticallyImplyLeading: false,
         ),
         body: GetBuilder<WalletController>(
-          builder: (controller) => controller.isLoading ? const CustomLoader() : controller.walletList.isEmpty ? const Center(
-            child: NoDataFound(),
-          ) : SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: Dimensions.screenPaddingHV,
-            child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.walletList.length,
-                separatorBuilder: (context, index) => const SizedBox(height: Dimensions.space10),
-                itemBuilder: (context, index) => CustomCard(
-                  cardBgColor: MyColor.colorWhite,
-                  verticalPadding: Dimensions.space15, horizontalPadding: Dimensions.space15,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${controller.walletList[index].miner?.coinCode ?? ""} ${MyStrings.wallet}",
-                            style: interRegularDefault.copyWith(color: MyColor.colorBlack)
-                          ),
-                          InkWell(
-                            onTap: (){
-                              controller.setTextFieldData(index);
-                              WalletUpdateBottomSheet.bottomSheet(context, index);
-                            },
-                            child: Container(
-                              height: 25, width: 25,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(color: MyColor.colorGrey.withOpacity(0.1), shape: BoxShape.circle),
-                              child: const Icon(Icons.edit, color: MyColor.primarySubTitleColor, size: 12.5)
-                            ),
-                          )
-                        ],
-                      ),
-                      const CustomDivider(space: Dimensions.space12),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SmallText(text: MyStrings.balance, textColor: MyColor.labelTextColor),
-                                const SizedBox(height: Dimensions.space5),
-                                Text(
-                                    "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.walletList[index].balance ?? "")} ${controller.walletList[index].miner?.coinCode ?? ""}",
-                                    style: interRegularDefault.copyWith(fontWeight: FontWeight.w500,)
+          builder: (controller) => controller.isLoading
+              ? const CustomLoader()
+              : controller.walletList.isEmpty
+                  ? const Center(
+                      child: NoDataFound(),
+                    )
+                  : SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: Dimensions.screenPaddingHV,
+                      child: ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.walletList.length,
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: Dimensions.space10),
+                          itemBuilder: (context, index) => CustomCard(
+                                cardBgColor: MyColor.colorWhite,
+                                verticalPadding: Dimensions.space15,
+                                horizontalPadding: Dimensions.space15,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            "${controller.walletList[index].miner?.coinCode ?? ""} ${MyStrings.wallet}",
+                                            style: interRegularDefault.copyWith(
+                                                color: MyColor.colorBlack)),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.setTextFieldData(index);
+                                            WalletUpdateBottomSheet.bottomSheet(
+                                                context, index);
+                                          },
+                                          child: Container(
+                                              height: 25,
+                                              width: 25,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: MyColor.colorGrey
+                                                      .withOpacity(0.1),
+                                                  shape: BoxShape.circle),
+                                              child: const Icon(Icons.edit,
+                                                  color: MyColor.primaryColor,
+                                                  size: 12.5)),
+                                        )
+                                      ],
+                                    ),
+                                    const CustomDivider(
+                                        space: Dimensions.space12),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const SmallText(
+                                                  text: MyStrings.balance,
+                                                  textColor:
+                                                      MyColor.labelTextColor),
+                                              const SizedBox(
+                                                  height: Dimensions.space5),
+                                              newMethod(controller, index),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            width: Dimensions.space15,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                const SmallText(
+                                                    text:
+                                                        "${MyStrings.wallet} ${MyStrings.address}",
+                                                    textColor:
+                                                        MyColor.primaryColor),
+                                                const SizedBox(
+                                                    height: Dimensions.space5),
+                                                Text(
+                                                  controller.walletList[index]
+                                                          .wallet ??
+                                                      "",
+                                                  style: interRegularDefault
+                                                      .copyWith(
+                                                          color: MyColor
+                                                              .colorBlack),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.end,
+                                                  maxLines: 2,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              ],
-                            ),
-
-                            const SizedBox(width: Dimensions.space15,),
-
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const SmallText(text: "${MyStrings.wallet} ${MyStrings.address}", textColor: MyColor.labelTextColor),
-                                  const SizedBox(height: Dimensions.space5),
-                                  Text(
-                                      controller.walletList[index].wallet ?? "",
-                                      style: interRegularDefault.copyWith(color: MyColor.colorBlack),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.end,
-                                      maxLines: 2,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-            ),
-          ),
+                              )),
+                    ),
         ),
         bottomNavigationBar: const CustomBottomNav(currentIndex: 1),
       ),
     );
   }
+
+
 }
