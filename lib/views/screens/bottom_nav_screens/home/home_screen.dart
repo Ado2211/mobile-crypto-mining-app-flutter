@@ -54,41 +54,32 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  DefaultText newMethod2(HomeController controller, int index) {
+  newMethodAmount(HomeController controller, int index) {
+  
+      return DefaultText(
+          text: "${controller.transactionList[index].trxType} "
+              "${MyConverter.removeTrailingZero(controller.transactionList[index].amount.toString())} "
+              "${controller.transactionList[index].currency ?? ''}",
+          textColor: controller.changeStatusColor(
+              controller.transactionList[index].trxType.toString(), index));
+    
+  }
+
+  newMethodBalance(HomeController controller, int index) {
     var c = controller.transactionList[index].currency;
-    if (c == "USDT") {
+    if (c != "USDT" && c != "USD") {
+      return DefaultText(
+        text: "${(controller.transactionList[index].postBalance.toString())} "
+            "${controller.transactionList[index].currency ?? ''}",
+        textColor: MyColor.colorBlack,
+      );
+    } else {
       return DefaultText(
         text:
             "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].postBalance.toString())} "
             "${controller.transactionList[index].currency ?? ''}",
         textColor: MyColor.colorBlack,
       );
-    } else {
-      return DefaultText(
-        text:
-            "${controller.transactionList[index].postBalance.toString()} "
-            "${controller.transactionList[index].currency ?? ''}",
-        textColor: MyColor.colorBlack,
-      );
-    }
-  }
-
-  DefaultText newMethod(HomeController controller, int index) {
-    var c = controller.transactionList[index].currency;
-    if (c == "USDT") {
-      return DefaultText(
-          text: "${controller.transactionList[index].trxType} "
-              "${MyConverter.twoDecimalPlaceFixedWithoutRounding(controller.transactionList[index].amount.toString())} "
-              "${controller.transactionList[index].currency ?? ''}",
-          textColor: controller.changeStatusColor(
-              controller.transactionList[index].trxType.toString(), index));
-    } else {
-      return DefaultText(
-          text: "${controller.transactionList[index].trxType} "
-              "${(controller.transactionList[index].amount.toString())} "
-              "${controller.transactionList[index].currency ?? ''}",
-          textColor: controller.changeStatusColor(
-              controller.transactionList[index].trxType.toString(), index));
     }
   }
 
@@ -312,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           const SizedBox(
                                                               height: Dimensions
                                                                   .space5),
-                                                          newMethod(
+                                                          newMethodAmount(
                                                               controller, index)
                                                         ],
                                                       ),
@@ -329,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           const SizedBox(
                                                               height: Dimensions
                                                                   .space5),
-                                                          newMethod2(
+                                                          newMethodBalance(
                                                               controller, index)
                                                         ],
                                                       )
@@ -389,6 +380,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  
 }
